@@ -1,0 +1,60 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+#LoginBlock{
+	text-align: center;
+	margin: auto;
+    
+   	padding-top: 218px;
+   	padding-bottom:400px;
+   	padding-right: 300px;
+   	padding-left: 300px;
+	/*background: linear-gradient(to bottom, #0033cc 9%, #00ffff 95%);*/
+	background-image: url("6.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	  
+	   
+   	
+}
+
+#userbox{
+	border-radius: 50px;
+	padding: 10px;
+	border: 2px solid #ffffff;
+	background: #020202;
+	background-color:rgba(0, 0, 0, 0);
+    color:white;
+	font-size: 150%;
+	
+    outline: black;
+    height:30px;
+    transition:height 1s;
+    -webkit-transition:height 1s;
+}
+#Login{
+	font-size: 300%;
+	font-family: 'Henny Penny';
+}
+
+#refer{
+	font-size: 150%;
+
+	color: rgb(6, 41, 87);
+}
+
+#submitbox1{
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+	background: linear-gradient(to bottom, #0033cc -2%, #660033 72%);
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 20px;
+	border-radius: 15px;
+}
