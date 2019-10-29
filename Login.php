@@ -36,21 +36,22 @@
         $password = mysqli_real_escape_string($db, $_POST['password']);
       
         if (empty($username)) {
-            echo "Username is required";
+            echo "<script>alert('Username is required');</script>";
         }
         if (empty($password)) {
-            echo "Password is required";
+            echo "<script>alert('Password is required');</script>";
         }
         $query = "SELECT * FROM user_login WHERE username='$username' AND password='$password'";
           $results = mysqli_query($db, $query);
           if (mysqli_num_rows($results) == 1) {
             $_SESSION['username'] = $username;
-            $_SESSION['success'] = "You are now logged in";
+            $_SESSION['success'] = "<script>alert('You are now logged in');</script>";
             header('location: index.php');
-          }else {
-              echo "Wrong username/password combination";
+          }
+          
+          
+          else {
+              echo "<script>alert('Wrong username/password combination');</script>";
           }
         }
-    
-
 ?>

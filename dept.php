@@ -11,23 +11,36 @@
   	header("location: Login.php");
   }
 ?>
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
 
 
-  	 
+	<h2>Home Page</h2>
+
+  	 //notification message
   	<?php if (isset($_SESSION['success'])) : ?>
-      	
+      	<h3>
           <?php 
           	echo $_SESSION['success']; 
           	unset($_SESSION['success']);
           ?>
-      	
+      	</h3>
   	<?php endif ?>
 
-   
-    <?php  if (isset($_SESSION['username'])) : 
-    	 $_SESSION['msg'] = "<script>alert('Logged in successfully');</script>"; ?>
-    	<!--<a href="index.php?logout='1'" style="color: red;">logout</a>-->
+    // logged in user information
+    <?php  if (isset($_SESSION['username'])) : ?>
+    	<p>Welcome <strong><?php echo $_SESSION['username']; ?></strong></p>
+    	<p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>
     <?php endif ?>
+</div>
+		
+</body>
+</html> -->
 
 <!DOCTYPE html>
 <html>
@@ -82,6 +95,28 @@ body {
   .sidenav a {font-size: 18px;}
 }
 
+form {
+    width:500px;
+    margin:50px auto;
+}
+.search {
+    padding:8px 15px;
+    background:rgba(50, 50, 50, 0.2);
+    border:0px solid #dbdbdb;
+}
+.button {
+    position:relative;
+    padding:6px 15px;
+    left:-8px;
+    border:2px solid #207cca;
+    background-color:#207cca;
+    color:#fafafa;
+}
+.button:hover  {
+    background-color:#fafafa;
+    color:#207cca;
+}
+
 table{
   border-collapse: collapse;
   width: 100%;
@@ -125,7 +160,7 @@ td{
   <a href="purchase.php">Purchase</a>
   <a href="sales.php">Sales</a>
   <a href="about.html">About</a>
-  <p> <a href="index.php?logout='1'">Logout</a> </p>
+  <a href="index.php?logout='1'">Logout</a>
 </div>
 
 <div id="main">
@@ -144,6 +179,12 @@ function closeNav() {
   document.getElementById("main").style.marginLeft= "0";
 }
 </script>
+<div class="search">
+<form>
+    <input type="text" placeholder="Search..."  name="department" required>
+    <input type="button" value="Search" name="dept_srh">
+</form>
+</div>
 
 <table>
 <tr>
@@ -156,29 +197,28 @@ function closeNav() {
   <th>Report</th>
   <th>Product Status</th>
   <th>Direct to Sales</th>
-  </tr>
+</tr>
 
 <?php
- include "connection.php";
-
- $sql="select purchase_id,stock_id,stock_name, quantity,dept_residing,consumable,report from stock_details";
- $result = $db -> query($sql);
+  include "connection.php";
+  if(isset($_POST['dept_srh'])){
+     $department =  mysqli_real_escape_string($db, $_POST['department']);
+     $sql = "SELECT * FROM dept_wise_details WHERE dept_residing='$department'";
+    $result = $db -> query($sql);
  
  if ($result->num_rows > 0){
    while($row = $result->fetch_assoc()){
-     echo "<tr><td>" . $row['purchase_id']."</td><td>" . $row['stock_id']."</td><td>".$row['stock_name']."</td><td>".$row['quantity']."</td><td>".$row['dept_residing']."</td><td>".$row['consumable']."</td><td>".$row['report']."</td></tr>";
+     echo "<tr><td>" . $row['purchase_id']."</td><td>" . $row['stock_id']."</td><td>".$row['stock_name']."</td><td>".$row['quantity']."</td><td>".$row['dept_residing']."</td><td>".$row['consumable']."</td><td>".$row['report']."</td><td>".$row['product_status']."</td></tr>";
    }
    echo "</table>";
  }
  else{
    echo "<script>alert('no entries added'); window.open('','_self')</script>";
  }
+}
 ?>
 
+</table>
 </div>
-
-
-
-   
 </body>
-</html> 
+</html>

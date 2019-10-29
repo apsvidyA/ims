@@ -11,23 +11,36 @@
   	header("location: Login.php");
   }
 ?>
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
 
 
-  	 
+	<h2>Home Page</h2>
+
+  	 //notification message
   	<?php if (isset($_SESSION['success'])) : ?>
-      	
+      	<h3>
           <?php 
           	echo $_SESSION['success']; 
           	unset($_SESSION['success']);
           ?>
-      	
+      	</h3>
   	<?php endif ?>
 
-   
-    <?php  if (isset($_SESSION['username'])) : 
-    	 $_SESSION['msg'] = "<script>alert('Logged in successfully');</script>"; ?>
-    	<!--<a href="index.php?logout='1'" style="color: red;">logout</a>-->
+    // logged in user information
+    <?php  if (isset($_SESSION['username'])) : ?>
+    	<p>Welcome <strong><?php echo $_SESSION['username']; ?></strong></p>
+    	<p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>
     <?php endif ?>
+</div>
+		
+</body>
+</html> -->
 
 <!DOCTYPE html>
 <html>
@@ -82,6 +95,38 @@ body {
   .sidenav a {font-size: 18px;}
 }
 
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Right-aligned section inside the top navigation */
+.topnav-right {
+  float: right;
+}
+
 table{
   border-collapse: collapse;
   width: 100%;
@@ -125,7 +170,7 @@ td{
   <a href="purchase.php">Purchase</a>
   <a href="sales.php">Sales</a>
   <a href="about.html">About</a>
-  <p> <a href="index.php?logout='1'">Logout</a> </p>
+  <a href="index.php?logout='1'">Logout</a>
 </div>
 
 <div id="main">
@@ -144,30 +189,63 @@ function closeNav() {
   document.getElementById("main").style.marginLeft= "0";
 }
 </script>
+<div class="topnav">
+  <div class="topnav-right">
+    <a href="pur.php">Add invoice</a>
+  </div>
+</div>
 
 <table>
 <tr>
   <th>Purchase ID</th>
-  <th>Stock ID</th>
-  <th>Stock Name</th>
+  <th>Purchase Date</th>
+  <th>Purchase Time</th>
+  <th>Invoice Name</th>
   <th>Quantity</th>
-  <th>Department Residing</th>
+  <th>Cost per Unit</th>
+  <th>Total Cost</th>
   <th>Consumable</th>
+  <th>Invoice Bought From</th>
+  <th>Department Distributed To</th>
   <th>Report</th>
-  <th>Product Status</th>
-  <th>Direct to Sales</th>
+  <th>Edit</th>
+  <th>Delete</th>
   </tr>
 
 <?php
  include "connection.php";
 
- $sql="select purchase_id,stock_id,stock_name, quantity,dept_residing,consumable,report from stock_details";
+ $sql="select * from purchase" ;
  $result = $db -> query($sql);
  
  if ($result->num_rows > 0){
    while($row = $result->fetch_assoc()){
-     echo "<tr><td>" . $row['purchase_id']."</td><td>" . $row['stock_id']."</td><td>".$row['stock_name']."</td><td>".$row['quantity']."</td><td>".$row['dept_residing']."</td><td>".$row['consumable']."</td><td>".$row['report']."</td></tr>";
-   }
+     echo "<tr><td>" . $row['purchase_id']
+     ."</td><td>" . $row['purchase_date']
+     ."</td><td>".$row['purchase_time']
+     ."</td><td>".$row['invoice_name']
+     ."</td><td>".$row['quantity']
+     ."</td><td>".$row['cost_per_unit']
+     ."</td><td>".$row['total_cost']
+     ."</td><td>".$row['consumable']
+     ."</td><td>".$row['invoice_bought_from']
+     ."</td><td>".$row['distributed_to_dept']
+     ."</td><td>".$row['report']
+     ."</td><td>"."<a href='pur_edit.php' id = 'edit'>Edit</a>"
+     ."</td><td>"."<a href='pur_delete.php' name= 'delete'>Delete</a>"."</td></tr>";
+     $del = $row['purchase_id'];
+      $purchaseId = $row['purchase_id'];
+      $purchaseDate = $row['purchase_date'];
+      $purchaseTime = $row['purchase_time'];
+      $invoiceName = $row['invoice_name'];
+      $quanTity = $row['quantity'];
+      $costPerUnit = $row['cost_per_unit'];
+      $totalCost = $row['total_cost'];
+      $invoiceBroughtFrom = $row['invoice_bought_from'];
+      $distributedToDept = $row['distributed_to_dept'];
+      $report = $row['report'];
+ 
+    }
    echo "</table>";
  }
  else{
@@ -175,10 +253,11 @@ function closeNav() {
  }
 ?>
 
-</div>
 
 
 
-   
+
+
+</div>   
 </body>
 </html> 
