@@ -94,6 +94,37 @@ body {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+table{
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+  
+}
+
+td,th{
+  border: 1px #603cba;
+  padding: 8px;
+  text-align: center;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding: 12px;
+  text-align: center;
+  background-color: #603cba;
+  color: white;
+}
+
+td{
+  text-align: center;
+  padding:10px;
+}
 </style>
 </head>
 <body>
@@ -111,7 +142,7 @@ body {
 <div id="main">
   
   <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
-</div>
+
 
 <script>
 function openNav() {
@@ -125,7 +156,56 @@ function closeNav() {
 }
 </script>
 
+<table>
+<tr>
+  <th>Sales ID</th>
+  <th>Stock ID</th>
+  <th>Sales Date</th>
+  <th>Sales Time</th>
+  <th>Stock Name</th>
+  <th>Quantity</th>
+  <th>Consumable</th>
+  <th>Saled From Department</th>
+  <th>Saled to</th>
+  <th>Cost</th>
+  <th>Report</th>
+  <th>Edit</th>
+  <th>Delete</th>
+  </tr>
 
-   
+<?php
+ include "connection.php";
+
+ $sql="select * from sales" ;
+ $result = $db -> query($sql);
+ 
+ if ($result->num_rows > 0){
+   while($row = $result->fetch_assoc()){
+?>
+     <tr>
+     <td><?php echo $row['sales_id'];?></td>
+     <td><?php echo $row['stock_id'];?></td>
+     <td><?php echo $row['sales_date'];?></td>
+     <td><?php echo $row['sales_time'];?></td>
+     <td><?php echo $row['stock_name'];?></td>
+     <td><?php echo $row['quantity'];?></td>
+     <td><?php echo $row['consumable'];?></td>
+     <td><?php echo $row['delivered_from'];?></td>
+     <td><?php echo $row['delivered_to'];?></td>
+     <td><?php echo $row['cost'];?></td>
+     <td><?php echo $row['report'];?></td>
+     <td><a href='sal.php?edited=1&eid=<?php echo $row['sales_id'];?>' >Edit</a></td>
+     <td><a href='sal_delete.php?deleted=1&eid=<?php  echo $row['sales_id'];?>'>Delete</a></td>
+     </tr>
+
+<?php
+   }
+  }
+  else{
+    echo "<script>alert('no entries added');</script>";
+   }   
+?>
+
+</div>   
 </body>
-</html> 
+</html>
