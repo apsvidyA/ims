@@ -47,8 +47,18 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+*{
+	margin: 0;
+	padding: 0;
+}
+
+
 body {
   font-family: "Lato", sans-serif;
+  background-image: url("3.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 .sidenav {
@@ -132,6 +142,8 @@ td,th{
 
 tr:nth-child(even){background-color: #f2f2f2;}
 
+tr:nth-child(odd){background-color: #ffffff;}
+
 tr:hover {background-color: #ddd;}
 
 th {
@@ -155,17 +167,17 @@ td{
 
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="index.php">Current Statistics</a>
+  <a href="current.php">Current Statistics</a>
   <a href="dept.php">Departmental Statistics</a>
   <a href="purchase.php">Purchase</a>
   <a href="sales.php">Sales</a>
-  <a href="about.html">About</a>
-  <a href="index.php?logout='1'">Logout</a>
+  
+  <a href="current.php?logout='1'">Logout</a>
 </div>
 
 <div id="main">
   
-  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+  <span style="font-size:30px;cursor:pointer;color:white;" onclick="openNav()">&#9776; </span>
 
 
 <script>
@@ -180,11 +192,14 @@ function closeNav() {
 }
 </script>
 <div class="search">
-<form>
-    <input type="text" placeholder="Search..."  name="department" required>
-    <input type="button" value="Search" name="dept_srh">
+<form action = 'dept.php' method="POST"> 
+    <input type="text" placeholder="Department..."  name="department" required>
+    <input type="submit" value="Search" name="dept_srh">
 </form>
 </div>
+
+
+
 
 <table>
 <tr>
@@ -201,22 +216,49 @@ function closeNav() {
 
 <?php
   include "connection.php";
-  if(isset($_POST['dept_srh'])){
-     $department =  mysqli_real_escape_string($db, $_POST['department']);
-     $sql = "SELECT * FROM dept_wise_details WHERE dept_residing='$department'";
-    $result = $db -> query($sql);
- 
- if ($result->num_rows > 0){
-   while($row = $result->fetch_assoc()){
+
+if(isset($_POST['dept_srh'])){
+$dept = $_POST['department']; 
+
+    $dept = mysqli_real_escape_string($db, $_POST['department']);
+    $qi = "SELECT * FROM stock_details WHERE dept_residing = '$dept'";
+    $raw_results = $db -> query($qi);
+         
+    // * means that it selects all fields, you can also write: `id`, `title`, `text`
+    // articles is the name of our table
+     
+    // '%$query%' is what we're looking for, % means anything, for example if $query is Hello
+    // it will match "hello", "Hello man", "gogohello", if you want exact match use `title`='$query'
+    // or if you want to match just full word so "gogohello" is out use '% $query %' ...OR ... '$query %' ... OR ... '% $query'
+     
+    if(mysqli_num_rows($raw_results) > 0){ // if one or more rows are returned do following
+         
+        while($row = $raw_results->fetch_assoc()){
+        // $results = mysql_fetch_array($raw_results) puts data from database into array, while it's valid it does the loop
+         
+            
+
+
+     
      echo "<tr><td>" . $row['purchase_id']."</td><td>" . $row['stock_id']."</td><td>".$row['stock_name']."</td><td>".$row['quantity']."</td><td>".$row['dept_residing']."</td><td>".$row['consumable']."</td><td>".$row['report']."</td><td>".$row['product_status']."</td></tr>";
    }
    echo "</table>";
  }
  else{
-   echo "<script>alert('no entries added'); window.open('','_self')</script>";
+  echo "No results";
+
  }
 }
+else{ // if query length is less than minimum
+  echo "Minimum length is ".$min_length;
+}
+// posts results gotten from database(title and text) you can also show id ($results['id'])
+        
+         
+    
+
 ?>
+
 
 </table>
 </div>

@@ -8,26 +8,21 @@
   if (isset($_GET['logout'])) {
   	session_destroy();
   	unset($_SESSION['username']);
-  	header("location: Login.php");
+  	header('location: Login.php');
   }
 ?>
 
 <?php if (isset($_SESSION['success'])) : ?>
-  <h3>
-    <?php 
-      echo $_SESSION['success']; 
-    	unset($_SESSION['success']);
-    ?>
-  </h3>
+<?php 
+  echo $_SESSION['success']; 
+  unset($_SESSION['success']);
+?>
 <?php endif ?>
 
-    <!-- // logged in user information -->
-<?php  if (isset($_SESSION['username'])) : ?>
-  <!-- <p>Welcome <strong><?php /* echo $_SESSION['username']; */ ?></strong></p>
-  <p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p> -->
+<?php  if (isset($_SESSION['username'])) : 
+  $_SESSION['msg'] = "<script>alert('Logged in successfully');</script>"; ?>
 <?php endif ?>
-</div>
-		
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,6 +80,16 @@ body {
   transition: margin-left .5s;
   padding: 16px;
 }
+.pro {
+    font-weight: bold;
+    font-size: 33px;
+    position: absolute;
+    /* padding: 10px; */
+    left: 38.1%; 
+    color: white;
+    font-family: 'Montserrat',cursive;
+    
+}
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
@@ -123,8 +128,11 @@ td{
   text-align: center;
   padding:10px;
 }
+
 </style>
+
 </head>
+
 <body>
 
 <div id="mySidenav" class="sidenav">
@@ -133,79 +141,68 @@ td{
   <a href="dept.php">Departmental Statistics</a>
   <a href="purchase.php">Purchase</a>
   <a href="sales.php">Sales</a>
-  
   <a href="current.php?logout='1'">Logout</a>
 </div>
 
 <div id="main">
   
   <span style="font-size:30px;cursor:pointer;color:#ffffff;" onclick="openNav()">&#9776; </span>
-  <span style="color:white;font-size:40px;text-align:center;padding-left:39%;padding-bottom:30px;font-weight: bold;">Sales Details</span>
+  <span style="color:white;font-size:40px;text-align:center;padding-left:35%;padding-bottom:30px;font-weight: bold;">Current Stock Details</span>
+  <script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  }
 
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+  }
+  </script>
 
+  <table>
+  <tr>
+    <th>Purchase ID</th>
+    <th>Stock ID</th>
+    <th>Stock Name</th>
+    <th>Quantity</th>
+    <th>Department Residing</th>
+    <th>Consumable</th>
+    <th>Report</th>
+    <th>Direct to Sales</th>
+    <th>Sales_id</th>
+    </tr>
 
-<script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
-}
+  <?php
+  include "connection.php";
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-  document.getElementById("main").style.marginLeft= "0";
-}
-</script>
-
-<table>
-<tr>
-  <th>Sales ID</th>
-  <th>Stock ID</th>
-  <th>Sales Date</th>
-  <th>Sales Time</th>
-  <th>Stock Name</th>
-  <th>Quantity</th>
-  <th>Consumable</th>
-  <th>Saled From Department</th>
-  <th>Saled to</th>
-  <th>Cost</th>
-  <th>Report</th>
-  <th>Edit</th>
-  <th>Delete</th>
-  </tr>
-
-<?php
- include "connection.php";
-
- $sql="select * from sales" ;
- $result = $db -> query($sql);
- 
- if ($result->num_rows > 0){
-   while($row = $result->fetch_assoc()){
-?>
-     <tr>
-     <td><?php echo $row['sales_id'];?></td>
-     <td><?php echo $row['stock_id'];?></td>
-     <td><?php echo $row['sales_date'];?></td>
-     <td><?php echo $row['sales_time'];?></td>
-     <td><?php echo $row['stock_name'];?></td>
-     <td><?php echo $row['quantity'];?></td>
-     <td><?php echo $row['consumable'];?></td>
-     <td><?php echo $row['delivered_from'];?></td>
-     <td><?php echo $row['delivered_to'];?></td>
-     <td><?php echo $row['cost'];?></td>
-     <td><?php echo $row['report'];?></td>
-     <td><a href='sal.php?edited=1&eid=<?php echo $row['sales_id'];?>' >Edit</a></td>
-     <td><a href='sal_delete.php?deleted=1&eid=<?php  echo $row['sales_id'];?>'>Delete</a></td>
-     </tr>
-
-<?php
-   }
+  $sql="select purchase_id,stock_id,stock_name, quantity,dept_residing,consumable,report,sales_id from stock_details";
+  $result = $db -> query($sql);
+  
+  if ($result->num_rows > 0){
+    while($row = $result->fetch_assoc()){
+    ?>
+      <tr>
+      <td><?php echo $row['purchase_id'];?></td>
+      <td><?php echo $row['stock_id'];?></td>
+      <td><?php echo $row['stock_name'];?></td>
+      <td><?php echo $row['quantity'];?></td>
+      <td><?php echo $row['dept_residing'];?></td>
+      <td><?php echo $row['consumable'];?></td>
+      <td><?php echo $row['report'];?></td>
+    
+      <td><a href="sal.php?saled=1&sid=<?php echo $row['stock_id'];?>">Direct to Sales</td> 
+      <td><?php echo $row['sales_id'];?></td>
+      </tr>
+  <?php
+    }
   }
   else{
     echo "<script>alert('no entries added');</script>";
-   }   
-?>
+  }
+  ?>
 
-</div>   
+</div>
+
 </body>
-</html>
+</html> 

@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.purchaseblock {
+    text-align: left;
+    margin: auto;
+    padding-top: 130px;
+    padding-bottom: 380px;
+    padding-right: 300px;
+    padding-left: 300px;
+    /*background: linear-gradient(to bottom, #00ff99 0%, #00ffff 105%);*/
+    background-image: url("2.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#box {
+    border-radius: 50px;
+    padding: 10px;
+    border: 2px solid #ccccff;
+    background: #ccffff;
+    border-radius: 50px;
+    padding: 10px;
+    border: 2px solid #ffffff;
+    background: #020202;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    font-size: 150%;
+    outline: black;
+    height: 30px;
+    transition: height 1s;
+    -webkit-transition: height 1s;
+}
+
+#Submitbox {
+    box-shadow: 0 14px 28px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: linear-gradient(to bottom, #0033cc -2%, #660033 72%);
+    border: none;
+    color: white;
+    padding: 40px 50px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 200px;
+    border-radius: 40px;
+    font-family: Aclonica;
+}
+
+#purchase {
+    font-family: monospace;
+    font-size: 300%;
+}
+
+#q {
+    border-radius: 50px;
+    padding: 10px;
+    border: 2px solid #ccccff;
+    background: #ccffff;
+    border-radius: 50px;
+    padding: 10px;
+    border: 2px solid #ffffff;
+    background: #020202;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    font-size: 150%;
+    outline: black;
+    height: 30px;
+    transition: height 1s;
+    -webkit-transition: height 1s;
+}
+
+#c {
+    border-radius: 50px;
+    padding: 10px;
+    border: 2px solid #ccccff;
+    background: #ccffff;
+    border-radius: 50px;
+    padding: 10px;
+    border: 2px solid #ffffff;
+    background: #020202;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    font-size: 150%;
+    outline: black;
+    height: 30px;
+    transition: height 1s;
+    -webkit-transition: height 1s;
+}
+
+#t {
+    border-radius: 50px;
+    padding: 10px;
+    border: 2px solid #ccccff;
+    background: #ccffff;
+    border-radius: 50px;
+    padding: 10px;
+    border: 2px solid #ffffff;
+    background: #020202;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    font-size: 150%;
+    outline: black;
+    height: 30px;
+    transition: height 1s;
+    -webkit-transition: height 1s;
+}

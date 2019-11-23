@@ -46,7 +46,7 @@
           if (mysqli_num_rows($results) == 1) {
             $_SESSION['username'] = $username;
             $_SESSION['success'] = "<script>alert('You are now logged in');</script>";
-            header('location: index.php');
+            header('location: current.php');
           }
           
           

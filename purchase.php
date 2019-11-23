@@ -47,8 +47,19 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
 body {
   font-family: "Lato", sans-serif;
+  background-image: url("3.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	  
 }
 
 .sidenav {
@@ -90,6 +101,17 @@ body {
   padding: 16px;
 }
 
+.pro {
+    font-weight: bold;
+    font-size: 33px;
+    position: absolute;
+    
+    left: 38.1%; 
+    color: white;
+    font-family: 'Montserrat',cursive;
+    
+}
+
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
@@ -100,7 +122,7 @@ body {
     overflow: hidden;
 }
 
-/* Style the links inside the navigation bar */
+
 .topnav a {
   float: left;
   color: #f2f2f2;
@@ -110,19 +132,19 @@ body {
   font-size: 17px;
 }
 
-/* Change the color of links on hover */
+
 .topnav a:hover {
   background-color: #ddd;
   color: black;
 }
 
-/* Add a color to the active/current link */
+
 .topnav a.active {
   background-color: #4CAF50;
   color: white;
 }
 
-/* Right-aligned section inside the top navigation */
+
 .topnav-right {
   float: right;
 }
@@ -141,6 +163,8 @@ td,th{
 }
 
 tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:nth-child(odd){background-color: #ffffff;}
 
 tr:hover {background-color: #ddd;}
 
@@ -165,18 +189,16 @@ td{
 
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="index.php">Current Statistics</a>
+  <a href="current.php">Current Statistics</a>
   <a href="dept.php">Departmental Statistics</a>
   <a href="purchase.php">Purchase</a>
   <a href="sales.php">Sales</a>
-  <a href="about.html">About</a>
-  <a href="index.php?logout='1'">Logout</a>
+  
+  <a href="current.php?logout='1'">Logout</a>
 </div>
 
 <div id="main">
   
-  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
-
 
 <script>
 function openNav() {
@@ -190,6 +212,9 @@ function closeNav() {
 }
 </script>
 <div class="topnav">
+<span style="font-size:30px;cursor:pointer;color:#ffffff;" onclick="openNav()">&#9776; </span>
+<span class="pro">PURCHASE DETAILS</span>
+
   <div class="topnav-right">
     <a href="pur.php">Add invoice</a>
   </div>
@@ -215,42 +240,34 @@ function closeNav() {
 <?php
  include "connection.php";
 
- $sql="select * from purchase" ;
+ $sql="call purdisplay()" ;
  $result = $db -> query($sql);
  
  if ($result->num_rows > 0){
    while($row = $result->fetch_assoc()){
-     echo "<tr><td>" . $row['purchase_id']
-     ."</td><td>" . $row['purchase_date']
-     ."</td><td>".$row['purchase_time']
-     ."</td><td>".$row['invoice_name']
-     ."</td><td>".$row['quantity']
-     ."</td><td>".$row['cost_per_unit']
-     ."</td><td>".$row['total_cost']
-     ."</td><td>".$row['consumable']
-     ."</td><td>".$row['invoice_bought_from']
-     ."</td><td>".$row['distributed_to_dept']
-     ."</td><td>".$row['report']
-     ."</td><td>"."<a href='pur_edit.php' id = 'edit'>Edit</a>"
-     ."</td><td>"."<a href='pur_delete.php' name= 'delete'>Delete</a>"."</td></tr>";
-     $del = $row['purchase_id'];
-      $purchaseId = $row['purchase_id'];
-      $purchaseDate = $row['purchase_date'];
-      $purchaseTime = $row['purchase_time'];
-      $invoiceName = $row['invoice_name'];
-      $quanTity = $row['quantity'];
-      $costPerUnit = $row['cost_per_unit'];
-      $totalCost = $row['total_cost'];
-      $invoiceBroughtFrom = $row['invoice_bought_from'];
-      $distributedToDept = $row['distributed_to_dept'];
-      $report = $row['report'];
- 
-    }
-   echo "</table>";
- }
- else{
-   echo "<script>alert('no entries added'); window.open('','_self')</script>";
- }
+?>
+     <tr>
+     <td><?php echo $row['purchase_id'];?></td>
+     <td><?php echo $row['purchase_date'];?></td>
+     <td><?php echo $row['purchase_time'];?></td>
+     <td><?php echo $row['invoice_name'];?></td>
+     <td><?php echo $row['quantity'];?></td>
+     <td><?php echo $row['cost_per_unit'];?></td>
+     <td><?php echo $row['total_cost'];?></td>
+     <td><?php echo $row['consumable'];?></td>
+     <td><?php echo $row['invoice_bought_from'];?></td>
+     <td><?php echo $row['distributed_to_dept'];?></td>
+     <td><?php echo $row['report'];?></td>
+     <td><a href='pur.php?edited=1&pid=<?php echo $row['purchase_id'];?>' >Edit</a></td>
+     <td><a href='pur_delete.php?deleted=1&did=<?php  echo $row['purchase_id'];?>'>Delete</a></td>
+     </tr>
+
+<?php
+   }
+  }
+  else{
+    echo "<script>alert('no entries added');</script>";
+   }   
 ?>
 
 

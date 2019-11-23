@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Welcome</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        body {
+            background-image: url("sto.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+        
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 40px;
+        }
+        
+        .navbar a:hover {
+            color: black;
+        }
+        
+        .topnav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 20px 22px;
+            text-decoration: none;
+            font-size: 30px;
+        }
+        
+        .topnav a:hover {
+            background-color: rgb(167, 158, 158);
+            color: black;
+        }
+        
+        .topnav a.active {
+            color: white;
+        }
+        
+        .topnav-right {
+            float: right;
+        }
+        
+        #home {
+            background-image: url("sto.jpg");
+            background-size: cover;
+            padding: 300px 0px 455px 0px;
+            color: white;
+            text-align: center;
+            font-size: 70px;
+        }
+        
+        #abt {
+            text-align: center;
+            font-size: 30px;
+            padding: 0px 250px 0px 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="topnav">
+            <div class="topnav-right">
+                <a href="Login.php">Login</a>
+                <a href="register.php">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="home">
+        <p>Invoice Management System</p>
+        <p id="abt">This system deals with the management of the invoices in the organisation and recording the purchase and sales details of the organisation. It reduces the time consumption and manual power.</p>
+    </div>
+</body>
+
+</html>
